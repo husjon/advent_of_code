@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+
+from datetime import datetime
+import os
+import requests
+
+import dotenv
+
+dotenv.load_dotenv()
+
+TODAY = datetime.now()
+# TODAY = datetime(year=2015, month=12, day=1)
+
+COOKIES={'session': os.environ['SESSION_COOKIE']}
+
+URL_PATH = f'https://adventofcode.com/{TODAY.year}/day/{TODAY.day}/input'
+
+SOLVE_PY_CONTENT = '''
+#!/usr/bin/env python
+import os
+
+
+def solve(input_content: str):
+    return None
+
+
+if __name__ == '__main__':
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
+    with open('./input.txt', 'r', encoding='utf-8') as f:
+        INPUT = f.read()
+
+    solution = solve(input_content=INPUT)
+    print(solution)
+
+'''.strip()
+
+
+if not (TODAY.month == 12 and 1 <= TODAY.day <= 25):
+    print('Not yet :)')
+    exit(1)
+
+
+TODAY_FOLDER = f'{TODAY.year}/{TODAY.day:02}'
+if not os.path.exists(f'{TODAY_FOLDER}/input.txt'):
+    os.makedirs(TODAY_FOLDER, exist_ok=True)
+
+    print(URL_PATH)
+    res = requests.get(URL_PATH, cookies=COOKIES, timeout=10)
+    with open(f'{TODAY_FOLDER}/input.txt', 'w+', encoding='utf-8') as f:
+        f.write(res.content.decode())
+
+    with open(f'{TODAY_FOLDER}/puzzle.py', 'w+', encoding='utf-8') as f:
+        f.write(SOLVE_PY_CONTENT)
+
+
+
+
+
+#echo mkdir -p "${FOLDER_PATH}"

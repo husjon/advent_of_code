@@ -1,0 +1,3 @@
+[MESSAGE_CONTROL]
+disable=missing-function-docstring,
+        missing-module-docstring
