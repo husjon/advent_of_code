@@ -2,7 +2,7 @@
 import os
 import re
 
-PATTERN = re.compile(r"one|two|three|four|five|six|seven|eight|nine|[1-9]")
+PATTERN = re.compile(r"(?=(one|two|three|four|five|six|seven|eight|nine|[1-9]))")
 NUMBER_MAPPING = {
     "one": 1,
     "two": 2,
